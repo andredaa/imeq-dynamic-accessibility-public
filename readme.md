@@ -30,12 +30,12 @@ Implementation details
 
 TODO
 
-remove option of time and mode in dialoque - done
-just "request isochrone" - done
-make cancel button work - done 
-display 0.2, 0.4, 0.6, 0.8, 1.0 kilometers isochrones  - done
-show clicked coordinate as center cirlcle - done
+- remove option of time and mode in dialoque - done
+- just "request isochrone" - done
+- make cancel button work - done 
+- display 0.2, 0.4, 0.6, 0.8, 1.0 kilometers isochrones  - done
+- show clicked coordinate as center cirlcle - done
 
-hide isochrones on click on center circlee - done
-clean coode - done
-import from cdn -done 
+- hide isochrones on click on center circlee - done
+- clean coode - done
+- import from cdn -done 
