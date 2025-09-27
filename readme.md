@@ -36,6 +36,6 @@ make cancel button work - done
 display 0.2, 0.4, 0.6, 0.8, 1.0 kilometers isochrones  - done
 show clicked coordinate as center cirlcle - done
 
-hide isochrones on click on center circlee
-clean coode
-import from cdn
+hide isochrones on click on center circlee - done
+clean coode - done
+import from cdn -done 
