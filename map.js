@@ -20,6 +20,9 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
 // Store clicked coordinates globally
 let clickedCoordinates = null;
 
+// id of a circle layer illustrating the last click on map
+let lastClickCircleLayerId = null;
+
 // Add click listener to capture coordinates
 map.on('click', function (e) {
     const lat = e.latlng.lat;
@@ -38,6 +41,22 @@ map.on('click', function (e) {
     menu.style.left = (containerPoint.x + 10) + 'px';
     menu.style.top = (containerPoint.y + 10) + 'px';
     menu.style.display = 'block';
+
+    // remove the layer that illustrates the last click on map
+    if (lastClickCircleLayerId) {
+        removeLayer(lastClickCircleLayerId);
+    }
+
+    // add a temporary circle layer to show where the user clicked on the map
+    const lastClickOnMapCircle = L.circleMarker([clickedCoordinates.lat, clickedCoordinates.lng], {
+        radius: 10,
+        color: '#ff7800',
+        weight: 2,
+        opacity: 0,
+        fillOpacity: 0.4
+    }).addTo(map);
+
+    lastClickCircleLayerId = lastClickOnMapCircle._leaflet_id;
 });
 
 // click listener for cancel button
@@ -57,12 +76,17 @@ document.getElementById('request-btn').addEventListener('click', async function 
 
     // Hide menu
     document.getElementById('isochrone-menu').style.display = 'none';
+    // Remove temp circle
+    removeLayer(lastClickCircleLayerId);
 
     const orsResponse = await openRouteServiceRequest(clickedCoordinates);
-    // add received isochrones as geojson layer
-    let addedLayerId = addIsochronesToMap(orsResponse);
-    // add a circle layer at the center of the isochrones. Pass also the corresponding isochrone layerId
-    addCenterCircleToMap(orsResponse.features[0].properties.center.reverse(), addedLayerId);  // reverse coords as ors returns lng first
+
+    if (orsResponse) {
+        // add received isochrones as geojson layer
+        let addedLayerId = addIsochronesToMap(orsResponse);
+        // add a circle layer at the center of the isochrones. Pass also the corresponding isochrone layerId
+        addCenterCircleToMap(orsResponse.features[0].properties.center.reverse(), addedLayerId);  // reverse coords as ors returns lng first
+    }
 });
 
 
